@@ -5,10 +5,10 @@ const mysql = require('mysql')
 const util = require('util')
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'applicationuser',
+  host: process.env.DB_HOST || 'mysql-database-qa.crqm4uyeoi50.us-east-1.rds.amazonaws.com',
+  user: process.env.DB_USER || 'admin',
   password: process.env.DB_PASS || 'applicationuser',
-  database: process.env.DB_NAME || 'movie_db'
+  database: process.env.DB_NAME || 'MySQLDB'
 })
 pool.query = util.promisify(pool.query)
 
@@ -22,7 +22,7 @@ app.get('/movies', async function (req, res) {
     res.json(rows)
   } catch (err) {
     console.error('API Error:', err)
-    res.staus(500).send({'msg': 'Internal server error'})
+    res.status(500).send({'msg': 'Internal server error'})
   }
 })
 
@@ -66,4 +66,5 @@ app.get('/', function (req, res) {
 
 console.log('server listening through port: ' + process.env.PORT)
 app.listen(process.env.PORT || 3000)
+console.log('Server is listening on port ' + (process.env.PORT || 3000));
 module.exports = app
